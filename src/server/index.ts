@@ -23,6 +23,8 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+
+
 // Room info endpoint
 app.get("/room/:code", (req, res) => {
   const info = roomManager.getRoomInfo(req.params.code);
