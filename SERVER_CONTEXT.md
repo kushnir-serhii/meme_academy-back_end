@@ -52,6 +52,7 @@ socket.on('select_phrase', ({ phraseId }) => ...)
 socket.on('submit_meme', ({ memeId }) => ...)
 socket.on('select_winner', ({ oderId }) => ...)
 socket.on('next_round', () => ...)
+socket.on('finish_game', () => ...)   // Host only — ends the game, broadcasts game_finished to all players
 ```
 
 ### Server → Client
@@ -67,6 +68,7 @@ socket.emit('phrase_selected', { phrase })
 socket.emit('player_submitted', { playerId })
 socket.emit('winner_selected', { winnerId, oderId })
 socket.emit('new_round', { round })
+socket.emit('game_finished')          // Broadcast to all — triggers /finished page redirect on all clients
 socket.emit('error', { message })
 ```
 
@@ -139,6 +141,7 @@ class GameRoomManager {
   submitMeme(socket, memeId): void      // Non-judge, phase: picking
   selectWinner(socket, oderId): void    // Judge only, phase: judging
   nextRound(socket): void               // Winner only, phase: result
+  finishGame(socket): void              // Host only — broadcasts game_finished, cleans up room
 
   // Internal helpers
   private dealHands(room): void         // Give each player 10 memes

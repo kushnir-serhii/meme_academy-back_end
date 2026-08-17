@@ -107,6 +107,11 @@ io.on("connection", (socket) => {
     roomManager.nextRound(socket);
   });
 
+  socket.on("finish_game", () => {
+    console.log("Finishing game");
+    roomManager.finishGame(socket);
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected:", socket.id);
     roomManager.handleDisconnect(socket);
